@@ -1,0 +1,29 @@
+//brings the createInstance function into scope
+import { createInstance } from "@optimizely/optimizely-sdk";
+
+//initializes the optimizely client
+const optiClientInst = createInstance({sdkKey: '<<replace with your key>>'}); 
+
+//when the configuration file has been downloaded, set user context and get a decision for the user on the feature 
+        optiClientInst.onReady().then(() => {
+            const user = optiClientInst.createUserContext(userId);
+            setTheUser(user);
+            setDecision(user.decide("promo_button"));
+        });
+
+{/*Show or hide the button based on the decision for the user*/}
+            {decision && decision.enabled && <AnimatedButton handleButonClick={handleButonClick} 
+                textColor="black"
+                backColor="lightgray"
+                scaleAmount={3}
+                buttonText={decision.variables.buttonText} />}
+
+//brancing logic based on variation variable values
+        if(decision){
+            if(decision.variables.freeShipping){
+                alert("You get free shipping!");
+            } else if(decision.variables.isSale){
+                alert("You get 10% off!");
+            } else alert("No pormotions!");
+            theUser.trackEvent('promoButtonClicked');
+        };
